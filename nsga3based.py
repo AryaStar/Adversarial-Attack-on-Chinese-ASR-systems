@@ -20,7 +20,7 @@ adversarial_model = DeepSpeech2Model(vocab_size=data_generator.vocab_size,
                                 init_from_pretrained_model='models/step_final',
                                 is_infer=True)
 
-M = 2
+M = 3
 pop_size = 100
 best_text = ''
 elite_size = 10
@@ -40,8 +40,8 @@ target_phrase = '不是'
 for audio_path in audio_list:
     if audio_path[-4:] != '.wav':
         continue
-    input_audio = load_wav(os.path.join('data_prepare', audio_path)) #第一步结果
-    Z,N = uniformpoint(pop_size,M)#生成一致性的参考解
+    input_audio = load_wav(os.path.join('data_prepare', audio_path)) # the result of first step
+    Z,N = uniformpoint(pop_size,M)# Generate consistent reference solutions
     print('****************************current target_phrase:', target_phrase,'****************************')
     with open(os.path.join('result', 'mywords.txt'), 'a') as f:
         f.write(str(audio_path)+'\t'+target_phrase+'\n')
@@ -51,7 +51,7 @@ for audio_path in audio_list:
     dist = float('inf')
 
     pop, pop_fun = create_init_pop(adversarial_model, target_phrase, os.path.join('data_prepare', audio_path), pop_size)#生成初始种群及其适应度值
-    Zmin = np.array(np.min(pop_fun,0)).reshape(1,M)#求理想点
+    Zmin = np.array(np.min(pop_fun,0)).reshape(1,M)# Calculate the ideal point
 
 
     itr = 1
@@ -66,17 +66,16 @@ for audio_path in audio_list:
             mutation_p = mu * mutation_p + alpha / np.abs(prev_loss - elite_ctc[0])
 
         if itr % 1 == 0:
-            print('**************************** ITERATION {} ****************************'.format(itr))
+            print('ITERATION {}'.format(itr))
             print('Current loss: {}'.format(elite_ctc[0]))
 
             best_pop = np.expand_dims(elite_pop[0],axis=0)
             ctc_scores, result_text = get_ctc_loss(adversarial_model, best_pop, target_phrase, data_generator, classify=True)
             best_text = result_text[0]
-            
             dist = levenshteinDistance(best_text, target_phrase)
             corr = "{0:.4f}".format(np.corrcoef([input_audio, elite_pop[0]])[0][1])
-            print('Audio similarity to input: {}'.format(corr))
-            print('Edit distance to target: {}'.format(dist))
+            print('similarity: {}'.format(corr))
+            print('Edit distance: {}'.format(dist))
             print('Currently decoded as: {}'.format(best_text))
             with open(os.path.join('result', audio_path[:-4]+'.txt'),'a') as f:
                 f.write(str(elite_ctc[0])+'\t'+str(corr)+'\n')
@@ -87,12 +86,12 @@ for audio_path in audio_list:
         off_pop = mutate_pop(next_pop, mutation_p, noise_stdev, elite_pop)
         prev_loss = elite_ctc[0]
 
-        #mixpop选取
+        #mixpop
         off_fun = get_values(adversarial_model, os.path.join('data_prepare', audio_path), off_pop, target_phrase) ###
-        # mix_pop = copy.deepcopy(np.vstack((pop, off_pop)))
-        # mix_fun = copy.deepcopy(np.vstack((pop_fun, off_fun)))
+
         mix_pop, mix_fun = off_pop, off_fun
-        Zmin = np.array(np.min(np.vstack((Zmin,off_fun)),0)).reshape(1,M)#更新理想点
+        Zmin = np.array(np.min(np.vstack((Zmin,off_fun)),0)).reshape(1,M)# Update the ideal point
+        ###### NSGA3 Algorithm
         pop,Next = envselect(mix_pop,mix_fun,N,Z,Zmin,M)
         pop_fun = mix_fun[Next,:]
         
