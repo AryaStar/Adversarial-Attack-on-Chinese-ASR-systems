@@ -4,3 +4,7 @@
 
 * Chinese ASR Systems: The Chinese ASR system we selected is DeepSpeech2 developed by Baidu. its support for Chinese Mandarin is excellent 
 
+* Our method is based on multi-objective evolutionary algorithm with three evaluated objectives, namely, CTC loss, speech similarity, and speech signal-to-noise ratio.
+
+  Our adversarial attack code is detailed in adversarial_tools.py and nsga3based.py
+
