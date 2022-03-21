@@ -209,7 +209,7 @@ def create_init_pop(adversarial_model,target_phrase,audio_path, pop_size):
     attack = pop[0]
     noise = attack - input_audio
     SNR = 10*np.log10((np.mean(input_audio**2))/(np.mean(noise**2)))
-    popfun = np.tile(np.array((ctc_score[0][0],1-corr,SNR)),(pop_size,1))
+    popfun = np.tile(np.array((ctc_score[0][0],1-corr,-SNR)),(pop_size,1))
     return pop, popfun
 
 def get_values(model, audio_path, pop, target_phrase):
