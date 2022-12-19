@@ -33,14 +33,15 @@ elite_size = 10
 noise_stdev = 0.02
 ##########################
 max_iters = 400
-audio_list = os.listdir('data_prepare')
+dir_name = 'data'
+audio_list = os.listdir(dir_name)
 target_phrase = '不是'
 ##########################
 
 for audio_path in audio_list:
     if audio_path[-4:] != '.wav':
         continue
-    input_audio = load_wav(os.path.join('data_prepare', audio_path)) # the result of first step
+    input_audio = load_wav(os.path.join(dir_name, audio_path)) # the result of first step
     Z,N = uniformpoint(pop_size,M)# Generate consistent reference solutions
     print('****************************current target_phrase:', target_phrase,'****************************')
     with open(os.path.join('result', 'mywords.txt'), 'a') as f:
@@ -50,7 +51,7 @@ for audio_path in audio_list:
     mutation_p = 0.005
     dist = float('inf')
 
-    pop, pop_fun = create_init_pop(adversarial_model, target_phrase, os.path.join('data_prepare', audio_path), pop_size)#生成初始种群及其适应度值
+    pop, pop_fun = create_init_pop(adversarial_model, target_phrase, os.path.join(dir_name, audio_path), pop_size)#生成初始种群及其适应度值
     Zmin = np.array(np.min(pop_fun,0)).reshape(1,M)# Calculate the ideal point
 
 
@@ -87,7 +88,7 @@ for audio_path in audio_list:
         prev_loss = elite_ctc[0]
 
         #mixpop
-        off_fun = get_values(adversarial_model, os.path.join('data_prepare', audio_path), off_pop, target_phrase) ###
+        off_fun = get_values(adversarial_model, os.path.join(dir_name, audio_path), off_pop, target_phrase) ###
 
         mix_pop, mix_fun = off_pop, off_fun
         Zmin = np.array(np.min(np.vstack((Zmin,off_fun)),0)).reshape(1,M)# Update the ideal point

@@ -8,3 +8,4 @@ visualdl
 SoundFile
 resampy
 webrtcvad
+paddlepaddle
