@@ -6,16 +6,13 @@
 
 # Attack on Chinese ASR System: DeepSpeech2(PaddleSpeech)
 
-* Ensure to Install DeepSpeech2 system first.
-  One of the Implementations for DeepSpeech2 can be find [here](https://github.com/yeyupiaoling/PaddlePaddle-DeepSpeech). This project is developed based on the DeepSpeech2 project based on PaddlePaddle. The paper of DeepSpeech2 is [&#34;Deep Speech 2 : End-to-End Speech Recognition in English and Mandarin&#34;](http://proceedings.mlr.press/v48/amodei16.pdf). The project supports for training and prediction under Windows, Linux, and support for development board reasoning predictions such as NVIDIA Jetson.
-* Our adversarial attack code are detailed in adversarial_tools.py and nsga3based.py. Please copy files: sadversarial_tools.py, nsga3based.py and adversarial_model.py into the DeepSpeech2 project directory.
-  Now create and run an attack:
+* Ensure to Install DeepSpeech2 system first. One of the Implementations for DeepSpeech2 can be find [here](https://github.com/yeyupiaoling/PaddlePaddle-DeepSpeech). This project is developed based on the DeepSpeech2 project based on PaddlePaddle. The paper of DeepSpeech2 is [&#34;Deep Speech 2 : End-to-End Speech Recognition in English and Mandarin&#34;](http://proceedings.mlr.press/v48/amodei16.pdf). The project supports for training and prediction under Windows, Linux, and support for development board reasoning predictions such as NVIDIA Jetson.
+* Please copy files: sadversarial_tools.py, nsga3based.py and adversarial_model.py into the DeepSpeech2 project directory. Now create and run an attack:
 
   ```
   python nsga3based.py
   ```
-
-  Ise this script to recognized the audio by DeepSpeech2 in roder to verify that the attack succeeded:
+* We use this script to recognized the audio by DeepSpeech2 in roder to verify that the attack succeeded:
 
   ```
   python recognization.py
