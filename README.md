@@ -1,7 +1,7 @@
 # Adversarial-Attack-on-Chinese-ASR-systems
 
 * To generate adversarial examples for your own files, please ensure that the file is sampled at 16KHz and uses signed 16-bit ints as the data type. Our method is based on multi-objective evolutionary algorithm with three evaluated objectives, namely, CTC loss, speech similarity, and speech signal-to-noise ratio.
-* Datasets of our experiments: We selected the datasets THCHS-30 and AISHELL-1. We randomly select 100 audio samples in wav format from each of these two datasets as the experimental subjects of our adversarial attack.
+* Datasets of our experiments: We selected the datasets [THCHS-30](https://arxiv.org/abs/1512.01882) and [AISHELL-1](https://ieeexplore.ieee.org/abstract/document/8384449/). We randomly select 100 audio samples in wav format from each of these two datasets as the experimental subjects of our adversarial attack.
 * Chinese ASR System: The Chinese ASR system we selected is DeepSpeech2 developed by Baidu.
 
 # Attack on Chinese ASR System: DeepSpeech2(PaddleSpeech)
