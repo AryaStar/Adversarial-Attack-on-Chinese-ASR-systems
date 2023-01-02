@@ -24,13 +24,13 @@ We encourage readers to listen to our chinese audio adversarial examples and the
 
 ## Revise Chinese Words in a Sentence
 
-The `chinese_audio.wav` will be recognized as `"设定二十九度"`  and `adversarial_audio.wav` will be recognized as `"设定二一九度"` by the DeepSpeech2 system.
+The `chinese_audio.wav` will be recognized as `"想听歌曲父亲"`  and `adversarial_audio.wav` will be recognized as `"想听歌曲母亲"` by the DeepSpeech2 system.
 
 ```
 成功加载了预训练模型：models/step_final
-ctcloss: 0.43564448
-final_text decoded as:  设定二一九度
-Audio similarity to origin: 0.9967
+ctcloss: 0.94573337 
+final_text decoded as:  想听歌曲母亲
+Audio similarity to input: 0.9966
 ```
 
 ## Adversarial Attack on Chinese Phrase
